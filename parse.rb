@@ -17,12 +17,10 @@ class String
 end
 AWARD_FW = %w(DOUBLE BEST GOLD BRONZE SILVER)
 class Product
-  attr_accessor :text, :top, :category, :diff, :awards, :name, :abv, :region, :price
-
+  attr_accessor :text, :top, :category, :diff, :award_list, :name, :abv, :region, :price
   def awards
-    @awards.join '|'
+    award_list.join '|'
   end
-
   def to_s
     self.inspect
   end
@@ -64,13 +62,13 @@ end
 
 products = lines.map do |l|
   parts = l.text.split(',')
-  l.awards = []
+  l.award_list = []
   rest = []
 
   # Parse awards
   parts.each do |p|
     if AWARD_FW.include? p.first_word
-      l.awards << p.strip
+      l.award_list << p.strip
     else
       rest << p
     end
